@@ -71,6 +71,13 @@ ESX.TriggerServerCallback('secure:checkstatus', function(status)
     end
   end
 end,Config.jobname)
+
+function notify(msg)
+  SetNotificationTextEntry("STRING")
+  AddTextComponentString(msg)
+  DrawNotification(true,false)
+end
+
 ```
 I hope you enjoy it :) if you want to contact me you can use
 discord -  damag#4013
