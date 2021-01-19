@@ -55,6 +55,7 @@ end)
 
 RegisterServerEvent('secure_delatecheck') --- pozwala na usuniecie z tabeli jesli job z tabeli nie jest taki sam jak job osoby np police - psycho
 AddEventHandler('secure_delatecheck', function(identifier,job)
+		local _source = source
 local wynik = MySQL.Sync.fetchAll("SELECT * FROM users WHERE identifier = @identifier", {
     ['@identifier'] = identifier
     })
@@ -62,11 +63,11 @@ local wynik = MySQL.Sync.fetchAll("SELECT * FROM users WHERE identifier = @ident
     local checkjob = user['job']
     if checkjob == job then
         print("Osoba nie może być usunięta / aktualna praca to - "..checkjob)
-        TriggerClientEvent('esx:showNotification', source, 'Ta osoba nadal jest zatrudniona nie może być ona usunięta')
+        TriggerClientEvent('esx:showNotification', _source, 'Ta osoba nadal jest zatrudniona nie może być ona usunięta')
     else
         MySQL.Async.execute('DELETE FROM szafka WHERE identifier = @identifier AND job = @job', {['@identifier'] = identifier,['@job'] = job})
         print(identifier.." został usunuięty z tabeli szafka praca - "..job)
-        TriggerClientEvent('esx:showNotification', source, 'Poprawne usunięcie z bazy')
+        TriggerClientEvent('esx:showNotification', _source, 'Poprawne usunięcie z bazy')
     end
 end)
 
